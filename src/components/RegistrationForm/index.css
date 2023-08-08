@@ -1,0 +1,14 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.registration-button {
+    margin-top: 5px;
+}
+
+.form-label {
+    padding-bottom: 0.1rem;
+}
