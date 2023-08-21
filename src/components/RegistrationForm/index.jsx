@@ -1,6 +1,7 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./index.css";
 import React, { useState } from "react";
+import { addUser, login, selectUsers } from "../../redux/userSlice";
 
 const RegistrationForm = () => {
     const [username, setUsername] = useState("");
@@ -8,18 +9,26 @@ const RegistrationForm = () => {
     const [userpassword, setUserpassword] = useState("");
     
     const dispatch = useDispatch();
+    const users = useSelector(selectUsers);
     
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(
-            login({
-                name: username,
-                email: useremail,
-                password: userpassword
-            })
-        )
-    }
+        const userExists = users.some((user) => user.name === username);
+
+        if (!userExists) {
+            dispatch(
+                login({
+                    name: username,
+                    email: useremail,
+                    password: userpassword
+                })
+            )
+            dispatch(addUser({ name: username, email: useremail, password: userpassword }));
+        } else {
+            alert("User with the same name already exists.");
+        }
+    };
 
     return ( 
     <>
